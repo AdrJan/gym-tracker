@@ -19,10 +19,13 @@ public class TrainingSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany(mappedBy = "trainingSession")
+
+    @OneToMany(mappedBy = "trainingSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<ExerciseSession> exerciseSessionList = new ArrayList<>();
+
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date createdAt;
+
     @PrePersist
     private void setDate() {
         createdAt = new Date();
