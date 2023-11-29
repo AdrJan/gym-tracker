@@ -17,6 +17,7 @@ public class ExerciseSerie {
     private long id;
     private int reps;
     private int weight;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "exercise_session_id")
     private ExerciseSession exerciseSession;

@@ -17,12 +17,15 @@ public class ExerciseSession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne(cascade = CascadeType.MERGE)
+
+    @ManyToOne
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
-    @OneToMany(mappedBy = "exerciseSession")
+
+    @OneToMany(mappedBy = "exerciseSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExerciseSerie> exerciseSerieList = new ArrayList<>();
-    @ManyToOne(cascade = CascadeType.ALL)
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "training_session_id")
     private TrainingSession trainingSession;
 }
