@@ -44,23 +44,40 @@
 
     function createRep(exerciseNo) {
         var container = document.getElementById("exercise-block-" + exerciseNo);
+        var repContainer = document.createElement("DIV");
+        repContainer.setAttribute("class", "d-flex flex-wrap");
+
+        var buttonLabel = document.createElement("BUTTON");
+        buttonLabel.setAttribute("class", "btn btn-light w-25");
+        buttonLabel.setAttribute("disabled", "");
+        buttonLabel.textContent = "Seria";
 
         var inputRep = document.createElement("INPUT");
         inputRep.setAttribute("id", "rep");
         inputRep.setAttribute("placeholder", "powt.");
         inputRep.setAttribute("type", "number");
-        inputRep.setAttribute("class", "form-control w-50");
+        inputRep.setAttribute("class", "form-control w-25");
         inputRep.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].reps");
 
         var inputWeight = document.createElement("INPUT");
         inputWeight.setAttribute("id", "weight");
         inputWeight.setAttribute("placeholder", "kg");
         inputWeight.setAttribute("type", "number");
-        inputWeight.setAttribute("class", "form-control w-50");
+        inputWeight.setAttribute("class", "form-control w-25");
         inputWeight.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].weights");
 
-        container.appendChild(inputRep);
-        container.appendChild(inputWeight);
+        var buttonDelete = document.createElement("BUTTON");
+        buttonDelete.setAttribute("onclick", "removeElement(this)");
+        buttonDelete.setAttribute("type", "button");
+        buttonDelete.setAttribute("class", "btn btn-outline-danger w-25");
+        buttonDelete.textContent = "x";
+
+        repContainer.appendChild(buttonLabel);
+        repContainer.appendChild(inputRep);
+        repContainer.appendChild(inputWeight);
+        repContainer.appendChild(buttonDelete);
+
+        container.appendChild(repContainer);
     }
 
     function createExercise() {
@@ -83,20 +100,6 @@
                 selectExercise.appendChild(option);
            }
 
-           var inputRep = document.createElement("INPUT");
-           inputRep.setAttribute("id", "rep");
-           inputRep.setAttribute("type", "number");
-           inputRep.setAttribute("class", "form-control w-50");
-           inputRep.setAttribute("placeholder", "powt.");
-           inputRep.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].reps");
-
-           var inputWeight = document.createElement("INPUT");
-           inputWeight.setAttribute("id", "weight");
-           inputWeight.setAttribute("type", "number");
-           inputWeight.setAttribute("class", "form-control w-50");
-           inputWeight.setAttribute("placeholder", "kg");
-           inputWeight.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].weights");
-
            var button = document.createElement("BUTTON");
            button.setAttribute("onclick", "createRep(" + exerciseNo + ")");
            button.setAttribute("type", "button");
@@ -112,8 +115,6 @@
            exerciseContainer.appendChild(button);
            exerciseContainer.appendChild(buttonDelete);
            exerciseContainer.appendChild(selectExercise);
-           exerciseContainer.appendChild(inputRep);
-           exerciseContainer.appendChild(inputWeight);
            container.appendChild(exerciseContainer);
 
            exerciseNo++;
@@ -123,6 +124,9 @@
         document.getElementById("exercise-block-" + exerciseNo).remove();
     }
 
+    function removeElement(element) {
+        element.parentElement.remove();
+    }
 
 </script>
 
