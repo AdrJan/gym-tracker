@@ -20,7 +20,7 @@ public class TrainingSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToMany(mappedBy = "trainingSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainingSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExerciseSession> exerciseSessionList = new ArrayList<>();
 
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
