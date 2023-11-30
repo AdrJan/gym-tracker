@@ -2,6 +2,7 @@ package com.adrjan.gymtracker.controllers;
 
 import com.adrjan.gymtracker.entity.Exercise;
 import com.adrjan.gymtracker.repositories.ExerciseRepository;
+import com.adrjan.gymtracker.repositories.TrainingsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +21,18 @@ public class ExerciseController {
 
     @Autowired
     private ExerciseRepository exerciseRepository;
+    @Autowired
+    private TrainingsRepository trainingsRepository;
 
     @GetMapping
     public String showExercise(Model model) {
         List<Exercise> exercises = new ArrayList<>();
-
         exerciseRepository.findAll().forEach(exercises::add);
+
         model.addAttribute("exercises", exercises);
+        model.addAttribute("trainingsCount", trainingsRepository.count());
+        model.addAttribute("lastTrainingDate", trainingsRepository
+                .findAllByOrderByCreatedAtDesc().get(0).getCreatedAt());
         if(!model.containsAttribute("exercise"))
             model.addAttribute("exercise", new Exercise());
 
