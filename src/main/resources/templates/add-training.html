@@ -34,8 +34,7 @@
        var repInputs = document.querySelectorAll("#rep");
        var weightInputs = document.querySelectorAll("#weight");
 
-       var flagValidated = validateInputs(repInputs);
-       flagValidated = validateInputs(weightInputs);
+       var flagValidated = validateInputs(repInputs) || validateInputs(weightInputs);
 
        return flagValidated;
    }
@@ -45,12 +44,12 @@
        for(let i = 0; i < inputs.length; i++) {
            if(isNaN(inputs[i].value) || inputs[i].value <= 0) {
                flagValidated = false;
-               inputs[i].setAttribute("class", "form-control w-50 border-danger");
+               inputs[i].setAttribute("class", "form-control w-25 border-danger");
            } else {
-               inputs[i].setAttribute("class", "form-control w-50");
+               inputs[i].setAttribute("class", "form-control w-25");
            }
        }
-       return flagValidated;
+       return inputs.length > 0 && flagValidated;
    }
 
    function createRep(exerciseNo) {
@@ -67,6 +66,7 @@
        inputRep.setAttribute("id", "rep");
        inputRep.setAttribute("placeholder", "powt.");
        inputRep.setAttribute("type", "number");
+       inputRep.setAttribute("min", "1");
        inputRep.setAttribute("class", "form-control w-25");
        inputRep.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].reps");
 
@@ -74,6 +74,7 @@
        inputWeight.setAttribute("id", "weight");
        inputWeight.setAttribute("placeholder", "kg");
        inputWeight.setAttribute("type", "number");
+       inputWeight.setAttribute("min", "1");
        inputWeight.setAttribute("class", "form-control w-25");
        inputWeight.setAttribute("name", "trainingSessionForm[" + exerciseNo + "].weights");
 
