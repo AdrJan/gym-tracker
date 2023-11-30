@@ -21,10 +21,7 @@
                         <p th:if="${exercises.empty}" class="text-danger text-center">Brak dostępnych ćwiczeń.</p>
                     </ul>
                 </div>
-
-                <div class="card-footer">
-
-                </div>
+                <div class="card-footer"></div>
             </div>
         </div>
         <div class="col-6">
@@ -34,13 +31,13 @@
                     <div class="carousel-item active">
                         <span>W bazie znajduje się już </span>
                         <span th:text="${#lists.size(exercises)}"></span>
-                        <span> pozycji.</span>
+                        <span> ćwiczeń.</span>
                     </div>
                     <div class="carousel-item">
-                        <p>Przykładowy tekst, który będzie znajdował w itemku drugim karuzeli.</p>
+                        <p>Wrzuciłeś już <span th:text="${trainingsCount}"></span> jednostek treningowych.</p>
                     </div>
                     <div class="carousel-item">
-                        <p>Przykładowy tekst, który będzie znajdował w itemku trzecim karuzeli.</p>
+                        <p>Ostatni raz ćwiczyłeś <span th:text="${lastTrainingDate}"></span>.</p>
                     </div>
                 </div>
             </div>
