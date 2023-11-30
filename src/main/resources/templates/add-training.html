@@ -132,21 +132,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-5" style="padding-left: 20px;">
-    <a class="navbar-brand ml-9 pl-9" href="#">GymTracker</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-            <a class="nav-item nav-link" th:href="@{/}">Strona główna</a>
-            <a class="nav-item nav-link" th:href="@{/exercise}">Baza ćwiczeń</a>
-            <a class="nav-item nav-link active" th:href="@{/add-training}">Dodaj trening</a>
-            <a class="nav-item nav-link" th:href="@{/trainings}">Treningi</a>
-        </div>
-    </div>
-</nav>
+<div th:include="layout :: div.nav-bar"></div>
 
 <th:p class="row col-md-12 text-danger justify-content-center" th:if="${exercisesList.empty}">Brak ćwiczeń w bazie! Aby dodać trening najpierw musisz dodać ćwiczenie do bazy.</th:p>
 
@@ -166,9 +152,7 @@
     </form>
 </div>
 
-<footer class="border-top py-3 my-4">
-    <p class="text-center text-muted">AdrJan 2022</p>
-</footer>
+<div th:include="layout :: div.footer"></div>
 
 </body>
 </html>
