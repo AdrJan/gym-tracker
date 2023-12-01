@@ -3,15 +3,18 @@
 <html lang="pl">
 <div th:include="layout :: div.header"/>
 
+
+
 <body>
 <div th:include="layout :: div.nav-bar"/>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
-            <div class="card float-end" style="width: 32rem;">
+            <div class="card float-end" style="width: 39rem; height: 30rem;">
                 <h5 class="card-header">Lista ćwiczeń</h5>
                 <div class="card-body">
-                    <ul class="scroll-it list-group card-text mx-auto overflow-auto" style="width: 29rem;">
+                    <ul class="scroll-it list-group card-text mx-auto overflow-auto" style="width: 36rem; height: 24rem;">
                         <li class="list-group-item" th:each="exercise : ${exercises}">
                             <form th:method="delete" th:action="@{/exercise/delete/{id}(id=${exercise.id})}">
                                 <span th:text="${exercise.name}"/>
@@ -25,23 +28,9 @@
             </div>
         </div>
         <div class="col-6">
-            <h2 class="mb-3">Czy wiesz, że?</h2>
-            <div class="carousel slide light" data-bs-ride="carousel" style="height: 20rem;">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <span>W bazie znajduje się już </span>
-                        <span th:text="${#lists.size(exercises)}"></span>
-                        <span> ćwiczeń.</span>
-                    </div>
-                    <div class="carousel-item">
-                        <p>Wrzuciłeś już <span th:text="${trainingsCount}"></span> jednostek treningowych.</p>
-                    </div>
-                    <div class="carousel-item">
-                        <p>Ostatni raz ćwiczyłeś <span th:text="${lastTrainingDate}"></span>.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="card" style="width: 32rem;">
+            <canvas id="myChart"></canvas>
+
+            <div class="card mt-2">
                 <div class="card-body">
                     <h5 class="card-title">Nowe ćwiczenie</h5>
                     <p class="card-text">Dodaj nowe ćwiczenie do bazy.</p>
@@ -56,5 +45,28 @@
     </div>
 </div>
 <div th:include="layout :: div.footer"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script th:inline="javascript">
+    const xValues = [50,60,70,80,90,100,110,120,130,140,150];
+    const yValues = [7,8,8,9,9,9,10,11,14,14,15];
+
+    new Chart("myChart", {
+      type: "line",
+      data: {
+        labels: xValues,
+        datasets: [{
+          borderColor: "rgba(0,0,255,0.1)",
+          data: yValues
+        }]
+      },
+      options: {
+        legend: {display: false},
+        scales: {
+          yAxes: [{ticks: {min: 6, max:16}}],
+        }
+      }
+    });
+</script>
 </body>
 </html>
