@@ -15,9 +15,9 @@
                 <h5 class="card-header">Lista ćwiczeń</h5>
                 <div class="card-body">
                     <ul class="scroll-it list-group card-text mx-auto overflow-auto" style="width: 36rem; height: 24rem;">
-                        <li class="list-group-item" th:each="exercise : ${exercises}">
+                        <li class="list-group-item" th:each="exercise : ${exercises}" th:attr="data-exerciseId=${exercise.id}">
                             <form th:method="delete" th:action="@{/exercise/delete/{id}(id=${exercise.id})}">
-                                <span th:text="${exercise.name}"/>
+                                <span th:text="${exercise.name}" />
                                 <button class="btn btn-danger btn-sm float-end">usuń</button>
                             </form>
                         </li>
@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="col-6">
-            <canvas id="myChart"></canvas>
+            <canvas id="myChart" style="height: 30rem;"></canvas>
 
             <div class="card mt-2">
                 <div class="card-body">
@@ -48,25 +48,53 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 <script th:inline="javascript">
-    const xValues = [50,60,70,80,90,100,110,120,130,140,150];
-    const yValues = [7,8,8,9,9,9,10,11,14,14,15];
+    $('li.list-group-item').click(function() {
+        var exerciseId = $(this).data('exerciseid');
 
-    new Chart("myChart", {
-      type: "line",
-      data: {
-        labels: xValues,
-        datasets: [{
-          borderColor: "rgba(0,0,255,0.1)",
-          data: yValues
-        }]
-      },
-      options: {
-        legend: {display: false},
-        scales: {
-          yAxes: [{ticks: {min: 6, max:16}}],
-        }
-      }
+        $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
+            .done(function(data) {
+                drawChart(data);
+            })
+            .fail(function(error) {
+                console.error('Błąd:', error);
+        });
     });
+
+    function drawChart(map) {
+        var mapAsMap = new Map(Object.entries(map));
+        var keys = Array.from(mapAsMap.keys());
+        var values = Array.from(mapAsMap.values());
+        var maxValue = Math.max(...values);
+
+        new Chart("myChart", {
+          type: "line",
+          data: {
+            labels: keys,
+            datasets: [{
+              borderColor: "rgba(0,0,255,0.1)",
+              data: values
+            }]
+          },
+          options: {
+            legend: {display: false},
+            scales: {
+              yAxes: [{ticks: {min: 0, max:maxValue}}],
+            }
+          }
+        });
+    }
+
+    function clickAndDraw(exerciseId, limit) {
+        console.log('hello2');
+        console.log(exerciseId + ' ' + limit);
+        $.get('/getExerciseVolume', { exerciseId: exerciseId, limit: limit })
+          .done(function(data) {
+            drawChart(data);
+          })
+          .fail(function(error) {
+            console.error('Błąd:', error);
+          });
+    }
 </script>
 </body>
 </html>
