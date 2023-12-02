@@ -46,7 +46,7 @@ public class ExerciseController {
 
         exerciseSessions.forEach(exerciseSession ->
                 result.put(
-                        exerciseSession.getTrainingSession().getCreatedAt().toString(),
+                        String.valueOf(exerciseSession.getTrainingSession().getId()),
                         exerciseSession.getExerciseSerieList().stream()
                                 .map(es -> es.getWeight() * es.getReps())
                                 .reduce(0, Integer::sum))
