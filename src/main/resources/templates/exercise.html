@@ -4,7 +4,6 @@
 <div th:include="layout :: div.header"/>
 
 
-
 <body>
 <div th:include="layout :: div.nav-bar"/>
 
@@ -14,10 +13,12 @@
             <div class="card float-end" style="width: 39rem; height: 30rem;">
                 <h5 class="card-header">Lista ćwiczeń</h5>
                 <div class="card-body">
-                    <ul class="scroll-it list-group card-text mx-auto overflow-auto" style="width: 36rem; height: 24rem;">
-                        <li class="list-group-item" th:each="exercise : ${exercises}" th:attr="data-exerciseId=${exercise.id}">
+                    <ul class="scroll-it list-group card-text mx-auto overflow-auto"
+                        style="width: 36rem; height: 24rem;">
+                        <li class="list-group-item" th:each="exercise : ${exercises}"
+                            th:attr="data-exerciseId=${exercise.id}">
                             <form th:method="delete" th:action="@{/exercise/delete/{id}(id=${exercise.id})}">
-                                <span th:text="${exercise.name}" />
+                                <span th:text="${exercise.name}"/>
                                 <button class="btn btn-danger btn-sm float-end">usuń</button>
                             </form>
                         </li>
@@ -28,10 +29,12 @@
             </div>
         </div>
         <div class="col-6">
-            <canvas id="myChart" style="height: 30rem;"></canvas>
+            <div class="card p-3" style="height: 20rem; width: 40rem;">
+                <canvas id="myChart"></canvas>
+            </div>
 
-            <div class="card mt-2">
-                <div class="card-body">
+            <div class="card mt-2" style="width: 40rem;">
+                <div class="card-body p-3">
                     <h5 class="card-title">Nowe ćwiczenie</h5>
                     <p class="card-text">Dodaj nowe ćwiczenie do bazy.</p>
                     <form method="post" th:object="${exercise}">
@@ -46,55 +49,8 @@
 </div>
 <div th:include="layout :: div.footer"></div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
-<script th:inline="javascript">
-    $('li.list-group-item').click(function() {
-        var exerciseId = $(this).data('exerciseid');
-
-        $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
-            .done(function(data) {
-                drawChart(data);
-            })
-            .fail(function(error) {
-                console.error('Błąd:', error);
-        });
-    });
-
-    function drawChart(map) {
-        var mapAsMap = new Map(Object.entries(map));
-        var keys = Array.from(mapAsMap.keys());
-        var values = Array.from(mapAsMap.values());
-        var maxValue = Math.max(...values);
-
-        new Chart("myChart", {
-          type: "line",
-          data: {
-            labels: keys,
-            datasets: [{
-              borderColor: "rgba(0,0,255,0.1)",
-              data: values
-            }]
-          },
-          options: {
-            legend: {display: false},
-            scales: {
-              yAxes: [{ticks: {min: 0, max:maxValue}}],
-            }
-          }
-        });
-    }
-
-    function clickAndDraw(exerciseId, limit) {
-        console.log('hello2');
-        console.log(exerciseId + ' ' + limit);
-        $.get('/getExerciseVolume', { exerciseId: exerciseId, limit: limit })
-          .done(function(data) {
-            drawChart(data);
-          })
-          .fail(function(error) {
-            console.error('Błąd:', error);
-          });
-    }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script th:inline="javascript" src="/js/charts.js">
 </script>
 </body>
 </html>
