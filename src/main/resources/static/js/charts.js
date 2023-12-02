@@ -65,8 +65,6 @@ function drawChart(map) {
 }
 
     function clickAndDraw(exerciseId, limit) {
-        console.log('hello2');
-        console.log(exerciseId + ' ' + limit);
         $.get('/getExerciseVolume', { exerciseId: exerciseId, limit: limit })
           .done(function(data) {
             drawChart(data);
