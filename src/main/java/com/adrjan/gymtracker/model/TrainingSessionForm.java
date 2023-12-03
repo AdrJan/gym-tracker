@@ -14,5 +14,5 @@ import java.util.List;
 public class TrainingSessionForm {
 
     @NotNull
-    private List<@Valid ExerciseForm> trainingSessionForm;
+    private List<@Valid ExerciseSessionForm> trainingSessionForm;
 }
