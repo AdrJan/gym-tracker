@@ -2,6 +2,7 @@ package com.adrjan.gymtracker.controllers;
 
 import com.adrjan.gymtracker.entity.Exercise;
 import com.adrjan.gymtracker.entity.ExerciseSession;
+import com.adrjan.gymtracker.model.ExerciseForm;
 import com.adrjan.gymtracker.repositories.ExerciseRepository;
 import com.adrjan.gymtracker.repositories.ExerciseSessionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,10 @@ public class ExerciseController {
         List<Exercise> exercises = new ArrayList<>();
         exerciseRepository.findAll().forEach(exercises::add);
 
+
         model.addAttribute("exercises", exercises);
-        if (!model.containsAttribute("exercise"))
-            model.addAttribute("exercise", new Exercise());
+        if (!model.containsAttribute("exerciseForm"))
+            model.addAttribute("exerciseForm", new ExerciseForm());
 
         return "exercise";
     }
@@ -56,12 +58,12 @@ public class ExerciseController {
     }
 
     @PostMapping
-    public String addExercise(@Valid Exercise exercise, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addExercise(@ModelAttribute @Valid ExerciseForm exerciseForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.exercise", bindingResult);
-            redirectAttributes.addFlashAttribute("exercise", exercise);
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.exerciseForm", bindingResult);
+            redirectAttributes.addFlashAttribute("exerciseForm", exerciseForm);
         } else {
-            exerciseRepository.save(exercise);
+            exerciseRepository.save(new Exercise(0, exerciseForm.getName(), new ArrayList<>()));
         }
         return "redirect:/exercise";
     }
