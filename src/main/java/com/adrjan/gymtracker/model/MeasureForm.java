@@ -14,15 +14,15 @@ import javax.validation.constraints.Positive;
 public class MeasureForm {
 
     @NotNull @Positive
-    private double leftBiceps;
+    private Double leftBiceps;
     @NotNull @Positive
-    private double rightBiceps;
+    private Double rightBiceps;
     @NotNull @Positive
-    private double chest;
+    private Double chest;
     @NotNull @Positive
-    private double waist;
+    private Double waist;
     @NotNull @Positive
-    private double leftThigh;
+    private Double leftThigh;
     @NotNull @Positive
-    private double rightThigh;
+    private Double rightThigh;
 }
