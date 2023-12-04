@@ -10,8 +10,22 @@
 <div class="container row justify-content-center">
 
     <div class="card w-50">
-
-        Tu będzie wpisywanie tych wszystkich wspaniałych danych.
+        <form method="post" th:object="${measureForm}">
+        <!-- TODO DO REFAKTORA, wydaje mi się można to łatwiej przedstawić.  -->
+            <input th:field="*{leftBiceps}">
+            <input th:field="*{rightBiceps}">
+            <input th:field="*{chest}">
+            <input th:field="*{waist}">
+            <input th:field="*{leftThigh}">
+            <input th:field="*{rightThigh}">
+            <span th:if="${#fields.hasErrors('leftBiceps')}" th:errors="*{name}"></span>
+            <span th:if="${#fields.hasErrors('rightBiceps')}" th:errors="*{rightBiceps}"></span>
+            <span th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></span>
+            <span th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></span>
+            <span th:if="${#fields.hasErrors('leftThigh')}" th:errors="*{leftThigh}"></span>
+            <span th:if="${#fields.hasErrors('rightThigh')}" th:errors="*{rightThigh}"></span>
+            <button class="btn btn-primary float-end">Zapisz wyniki</button>
+        </form>
     </div>
 </div>
 
