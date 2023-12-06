@@ -13,16 +13,16 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class MeasureForm {
 
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull @Positive
     private Double leftBiceps;
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull @Positive
     private Double rightBiceps;
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull  @Positive
     private Double chest;
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull @Positive
     private Double waist;
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull @Positive
     private Double leftThigh;
-    @NotNull(message = "Pole nie może być puste!") @Positive
+    @NotNull @Positive
     private Double rightThigh;
 }
