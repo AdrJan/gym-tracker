@@ -8,7 +8,7 @@
 <div th:include="layout :: div.nav-bar"/>
 
 <div class="container">
-<div class="row justify-content-center">
+<div class="row">
     <div class="col-12 w-25">
         <h5>Zmierz się</h5>
         <form method="post" th:object="${measureForm}">
@@ -18,12 +18,14 @@
             <input class="form-control mb-2" th:field="*{waist}" placeholder="pas">
             <input class="form-control mb-2" th:field="*{leftThigh}" placeholder="lewe udo">
             <input class="form-control mb-2" th:field="*{rightThigh}" placeholder="prawe udo">
+            <input class="form-control mb-2" th:field="*{rightThigh}" placeholder="waga">
             <span th:if="${#fields.hasErrors('leftBiceps')}" th:errors="*{leftBiceps}"></span>
             <span th:if="${#fields.hasErrors('rightBiceps')}" th:errors="*{rightBiceps}"></span>
             <span th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></span>
             <span th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></span>
             <span th:if="${#fields.hasErrors('leftThigh')}" th:errors="*{leftThigh}"></span>
             <span th:if="${#fields.hasErrors('rightThigh')}" th:errors="*{rightThigh}"></span>
+            <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></span>
             <div>            <button class="btn btn-primary btn-lg w-100">Zapisz</button></div>
         </form>
 </div>
