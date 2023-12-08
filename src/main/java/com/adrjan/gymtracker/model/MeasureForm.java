@@ -25,4 +25,6 @@ public class MeasureForm {
     private Double leftThigh;
     @NotNull @Positive
     private Double rightThigh;
+    @NotNull @Positive
+    private Double weight;
 }
