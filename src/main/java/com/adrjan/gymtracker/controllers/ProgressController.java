@@ -1,7 +1,6 @@
 package com.adrjan.gymtracker.controllers;
 
 import com.adrjan.gymtracker.entity.Measurement;
-import com.adrjan.gymtracker.model.ExerciseForm;
 import com.adrjan.gymtracker.model.MeasureForm;
 import com.adrjan.gymtracker.repositories.MeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
