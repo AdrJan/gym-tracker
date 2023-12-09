@@ -25,4 +25,5 @@ public class Measurement {
     private double waist;
     private double leftThigh;
     private double rightThigh;
+    private double weight;
 }
