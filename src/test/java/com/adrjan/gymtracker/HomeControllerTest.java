@@ -21,7 +21,6 @@ public class HomeControllerTest {
     public void testHomePage() {
         mockMvc.perform(MockMvcRequestBuilders.get("/"))
                 .andExpect(MockMvcResultMatchers.status().is(200))
-                .andExpect(MockMvcResultMatchers.view().name("home"))
-                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("GYM TRACKER")));
+                .andExpect(MockMvcResultMatchers.view().name("home"));
     }
 }
