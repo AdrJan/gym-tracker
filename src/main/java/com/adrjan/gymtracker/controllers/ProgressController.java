@@ -26,6 +26,7 @@ public class ProgressController {
     public String showProgressPage(Model model) {
         if (!model.containsAttribute("measureForm"))
             model.addAttribute("measureForm", new MeasureForm());
+        model.addAttribute("measurements", getMeasurements(10));
         return "progress";
     }
 

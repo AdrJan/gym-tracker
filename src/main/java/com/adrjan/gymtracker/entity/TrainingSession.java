@@ -23,7 +23,7 @@ public class TrainingSession {
     @OneToMany(mappedBy = "trainingSession", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExerciseSession> exerciseSessionList = new ArrayList<>();
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date createdAt;
 
     @PrePersist
