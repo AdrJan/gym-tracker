@@ -54,8 +54,9 @@ public class ProgressController {
     }
 
     @GetMapping("/getMeasurements")
-    public @ResponseBody List<Measurement> getMeasurements() {
+    public @ResponseBody List<Measurement> getMeasurements(@RequestParam(defaultValue = "10") long limit) {
         return StreamSupport.stream(measurementRepository.findAll().spliterator(), false)
+                .limit(limit)
                 .collect(Collectors.toList());
     }
 }
