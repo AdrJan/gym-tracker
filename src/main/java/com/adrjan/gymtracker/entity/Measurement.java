@@ -1,11 +1,10 @@
 package com.adrjan.gymtracker.entity;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -26,4 +25,12 @@ public class Measurement {
     private double leftThigh;
     private double rightThigh;
     private double weight;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
+    private Date createdAt;
+
+    @PrePersist
+    private void setDate() {
+        createdAt = new Date();
+    }
 }
