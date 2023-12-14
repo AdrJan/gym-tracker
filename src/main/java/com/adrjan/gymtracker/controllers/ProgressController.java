@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,7 +29,11 @@ public class ProgressController {
     public String showProgressPage(Model model) {
         if (!model.containsAttribute("measureForm"))
             model.addAttribute("measureForm", new MeasureForm());
-        model.addAttribute("measurements", getMeasurements(10));
+        Map<Integer, String> measurementMap = new HashMap<>();
+        getMeasurements(10).forEach(x -> measurementMap.put(
+                x.getId(),
+                x.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
+        model.addAttribute("measurementMap", measurementMap);
         return "progress";
     }
 

@@ -34,8 +34,10 @@
         <div class="col-12 w-25">
             <h5>Wyniki: </h5>
             <ul class="scroll-it list-group">
-                <li class="list-group-item" th:each="measurement : ${measurements}">
-                    <span th:text="${measurement.createdAt}"></span>
+                <li class="list-group-item" th:each="measurement : ${measurementMap}">
+                    <div class="text-center">
+                        <span th:text="${measurement.value}"></span>
+                    </div>
 <!--                    <div>-->
 <!--                        <label>Lewy biceps: </label> <span th:text="${measurement.leftBiceps}"/>-->
 <!--                    </div>-->

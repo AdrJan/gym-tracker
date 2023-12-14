@@ -1,10 +1,9 @@
 package com.adrjan.gymtracker.entity;
 
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,11 +25,10 @@ public class Measurement {
     private double rightThigh;
     private double weight;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-    private Date createdAt;
+    private LocalDateTime createdAt;
 
     @PrePersist
     private void setDate() {
-        createdAt = new Date();
+        createdAt = LocalDateTime.now();
     }
 }
