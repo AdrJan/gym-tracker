@@ -33,39 +33,45 @@
         </div>
         <div class="col-12 w-25">
             <h5>Wyniki: </h5>
-            <ul class="scroll-it list-group">
-                <li class="list-group-item" th:each="measurement : ${measurementMap}">
-                    <div class="text-center">
-                        <span th:text="${measurement.value}"></span>
-                    </div>
-<!--                    <div>-->
-<!--                        <label>Lewy biceps: </label> <span th:text="${measurement.leftBiceps}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Prawy biceps: </label><span th:text="${measurement.rightBiceps}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Klatka: </label>-->
-<!--                        <span th:text="${measurement.chest}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Pas: </label>-->
-<!--                        <span th:text="${measurement.waist}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Lewe udo: </label>-->
-<!--                        <span th:text="${measurement.leftThigh}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Prawe udo: </label>-->
-<!--                        <span th:text="${measurement.rightThigh}"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Waga: </label>-->
-<!--                        <span th:text="${measurement.weight}"/>-->
-<!--                    </div>-->
-                </li>
-            </ul>
+            <div class="border rounded p-2">
+                <ul class="list-group" style="max-height: 10rem; overflow-y: scroll;">
+                    <li class="list-group-item" th:each="measurement : ${measurementMap}">
+                        <div class="text-center">
+                            <span th:text="${measurement.value}"></span>
+                        </div>
+                        <!--                    <div>-->
+                        <!--                        <label>Lewy biceps: </label> <span th:text="${measurement.leftBiceps}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Prawy biceps: </label><span th:text="${measurement.rightBiceps}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Klatka: </label>-->
+                        <!--                        <span th:text="${measurement.chest}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Pas: </label>-->
+                        <!--                        <span th:text="${measurement.waist}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Lewe udo: </label>-->
+                        <!--                        <span th:text="${measurement.leftThigh}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Prawe udo: </label>-->
+                        <!--                        <span th:text="${measurement.rightThigh}"/>-->
+                        <!--                    </div>-->
+                        <!--                    <div>-->
+                        <!--                        <label>Waga: </label>-->
+                        <!--                        <span th:text="${measurement.weight}"/>-->
+                        <!--                    </div>-->
+                    </li>
+                </ul>
+                <hr/>
+                <div style="height: 10rem;">
+
+                </div>
+            </div>
         </div>
 
         <div th:include="layout :: div.footer">
