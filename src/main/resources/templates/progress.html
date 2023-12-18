@@ -35,7 +35,7 @@
             <h5>Wyniki: </h5>
             <div class="border rounded p-2">
                 <ul class="list-group" style="max-height: 10rem; overflow-y: scroll;">
-                    <li class="list-group-item" th:each="measurement : ${measurementMap}">
+                    <li th:onclick="'showMeasurement(\'' + ${measurement.key} + '\')'" class="list-group-item" th:each="measurement : ${measurementMap}">
                         <div class="text-center">
                             <span th:text="${measurement.value}"></span>
                         </div>
@@ -78,5 +78,10 @@
         </div>
     </div>
 </div>
+<script th:inline="javascript">
+    function showMeasurement(parametr) {
+        alert('Kliknięto przycisk z parametrem: ' + parametr);
+    }
+</script>
 </body>
 </html>
