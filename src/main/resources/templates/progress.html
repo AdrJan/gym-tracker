@@ -35,36 +35,11 @@
             <h5>Wyniki: </h5>
             <div class="border rounded p-2">
                 <ul class="list-group" style="max-height: 10rem; overflow-y: scroll;">
-                    <li th:onclick="'showMeasurement(\'' + ${measurement.key} + '\')'" class="list-group-item" th:each="measurement : ${measurementMap}">
+                    <li th:onclick="'showMeasurement(\'' + ${measurement.key} + '\')'" class="list-group-item"
+                        th:each="measurement : ${measurementMap}">
                         <div class="text-center">
                             <span th:text="${measurement.value}"></span>
                         </div>
-                        <!--                    <div>-->
-                        <!--                        <label>Lewy biceps: </label> <span th:text="${measurement.leftBiceps}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Prawy biceps: </label><span th:text="${measurement.rightBiceps}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Klatka: </label>-->
-                        <!--                        <span th:text="${measurement.chest}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Pas: </label>-->
-                        <!--                        <span th:text="${measurement.waist}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Lewe udo: </label>-->
-                        <!--                        <span th:text="${measurement.leftThigh}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Prawe udo: </label>-->
-                        <!--                        <span th:text="${measurement.rightThigh}"/>-->
-                        <!--                    </div>-->
-                        <!--                    <div>-->
-                        <!--                        <label>Waga: </label>-->
-                        <!--                        <span th:text="${measurement.weight}"/>-->
-                        <!--                    </div>-->
                     </li>
                 </ul>
                 <hr/>
@@ -79,8 +54,8 @@
     </div>
 </div>
 <script th:inline="javascript">
-    function showMeasurement(parametr) {
-        alert('Kliknięto przycisk z parametrem: ' + parametr);
+    function showMeasurement(measurementId) {
+
     }
 </script>
 </body>
