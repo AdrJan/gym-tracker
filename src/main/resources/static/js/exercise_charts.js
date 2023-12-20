@@ -1,16 +1,16 @@
 var chart = null;
 
-    $('li.list-group-item').click(function() {
-        var exerciseId = $(this).data('exerciseid');
+$('li.list-group-item').click(function() {
+    var exerciseId = $(this).data('exerciseid');
 
-        $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
-            .done(function(data) {
-                drawChart(data);
-            })
-            .fail(function(error) {
-                console.error('Błąd:', error);
-        });
+    $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
+        .done(function(data) {
+            drawChart(data);
+        })
+        .fail(function(error) {
+            console.error('Błąd:', error);
     });
+});
 
 function drawChart(map) {
     let mapAsMap = new Map(Object.entries(map));
