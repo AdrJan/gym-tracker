@@ -43,8 +43,30 @@
                     </li>
                 </ul>
                 <hr/>
-                <div style="height: 10rem; text-center">
-                    Wybierz pomiar.
+                <div style="container">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <span><strong>Lewy biceps:</strong></span> <span id="left-biceps-value" class="text-end"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong>Prawy biceps:</strong> </span> <span id="right-biceps-value"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong> Klatka:</strong> </span> <span id="chest-value"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong>Pas:</strong></span> <span id="waist-value"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong>Lewe udo:</strong> </span> <span id="left-thigh-value"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong>Prawe udo:</strong>  </span> <span id="right-thigh-value"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <span><strong>Waga:</strong>  </span> <span id="weight-value"></span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -55,8 +77,20 @@
 </div>
 <script th:inline="javascript">
     function showMeasurement(measurementId) {
-
-    }
+        $.get('/progress/getMeasurement', { id: measurementId})
+          .done(function(data) {
+            document.getElementById("left-biceps-value").textContent=data.leftBiceps;
+            document.getElementById("right-biceps-value").textContent=data.rightBiceps;
+            document.getElementById("chest-value").textContent=data.chest;
+            document.getElementById("waist-value").textContent=data.waist;
+            document.getElementById("left-thigh-value").textContent=data.leftThigh;
+            document.getElementById("right-thigh-value").textContent=data.rightThigh;
+            document.getElementById("weight-value").textContent=data.weight;
+          })
+          .fail(function(error) {
+            console.error('Błąd:', error);
+          });
+}
 </script>
 </body>
 </html>
