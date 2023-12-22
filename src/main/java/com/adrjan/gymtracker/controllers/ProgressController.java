@@ -57,6 +57,7 @@ public class ProgressController {
                 .waist(measureForm.getWaist())
                 .leftThigh(measureForm.getLeftThigh())
                 .rightThigh(measureForm.getRightThigh())
+                .weight(measureForm.getWeight())
                 .build();
 
         measurementRepository.save(measurement);
