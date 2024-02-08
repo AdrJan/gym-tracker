@@ -13,6 +13,9 @@ import javax.validation.constraints.Positive;
 @AllArgsConstructor
 public class MeasureForm {
 
+    // TODO Dodać odpowiednie komunikaty w odpowiedniej chwili.
+    // Obecnie wali komunikatem 'nie może mieć wartości null'.
+
     @NotNull @Positive
     private Double leftBiceps;
     @NotNull @Positive

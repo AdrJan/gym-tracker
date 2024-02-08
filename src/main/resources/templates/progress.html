@@ -19,16 +19,17 @@
                 <input class="form-control mb-2" th:field="*{leftThigh}" placeholder="lewe udo">
                 <input class="form-control mb-2" th:field="*{rightThigh}" placeholder="prawe udo">
                 <input class="form-control mb-2" th:field="*{weight}" placeholder="waga">
-                <span th:if="${#fields.hasErrors('leftBiceps')}" th:errors="*{leftBiceps}"></span>
-                <span th:if="${#fields.hasErrors('rightBiceps')}" th:errors="*{rightBiceps}"></span>
-                <span th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></span>
-                <span th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></span>
-                <span th:if="${#fields.hasErrors('leftThigh')}" th:errors="*{leftThigh}"></span>
-                <span th:if="${#fields.hasErrors('rightThigh')}" th:errors="*{rightThigh}"></span>
-                <span th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></span>
                 <div>
                     <button class="btn btn-primary btn-lg w-100">Zapisz</button>
                 </div>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('leftBiceps')}" th:errors="*{leftBiceps}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('rightBiceps')}" th:errors="*{rightBiceps}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('leftThigh')}" th:errors="*{leftThigh}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('rightThigh')}" th:errors="*{rightThigh}"></p>
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
+                <p class="text-center text-danger mt-4" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </form>
         </div>
         <div class="col-12 w-25">

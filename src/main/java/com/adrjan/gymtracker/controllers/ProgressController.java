@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,14 @@ public class ProgressController {
                 .weight(measureForm.getWeight())
                 .build();
 
-        measurementRepository.save(measurement);
+        LocalDate todayDate = LocalDate.now();
+        if(measurementRepository.findByCreatedAt(todayDate).isEmpty()) {
+            measurementRepository.save(measurement);
+        } else {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "Dzisiejszego dnia już dokonałeś pomiaru." +
+                            " Jeśli chcesz, możesz go edytować na liście obok.");
+        }
 
         return "redirect:/progress";
     }
