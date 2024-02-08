@@ -48,31 +48,46 @@
                     <ul class="list-group">
                         <li class="list-group-item">
                             <span><strong>Lewy biceps:</strong></span>
-                            <span id="left-biceps-value">...</span><span> cm</span>
+                            <span id="left-biceps-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.leftBiceps}"></span>
+                            <span id="left-biceps-value" th:unless="${foundMeasurement}">...</span>
+                            <span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong>Prawy biceps:</strong></span>
-                            <span id="right-biceps-value">...</span><span> cm</span>
+                            <span id="right-biceps-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.rightBiceps}"></span>
+                            <span id="right-biceps-value" th:unless="${foundMeasurement}">...</span><span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong> Klatka:</strong></span>
-                            <span id="chest-value">...</span><span> cm</span>
+                            <span id="chest-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.chest}"></span>
+                            <span id="chest-value" th:unless="${foundMeasurement}">...</span><span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong>Pas:</strong></span>
-                            <span id="waist-value">...</span><span> cm</span>
+                            <span id="waist-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.waist}"></span>
+                            <span id="waist-value" th:unless="${foundMeasurement}">...</span><span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong>Lewe udo:</strong></span>
-                            <span id="left-thigh-value">...</span><span> cm</span>
+                            <span id="left-thigh-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.leftThigh}"></span>
+                            <span id="left-thigh-value" th:unless="${foundMeasurement}">...</span><span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong>Prawe udo:</strong></span>
-                            <span id="right-thigh-value">...</span><span> cm</span>
+                            <span id="right-thigh-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.rightThigh}"></span>
+                            <span id="right-thigh-value" th:unless="${foundMeasurement}">...</span><span> cm</span>
                         </li>
                         <li class="list-group-item">
                             <span><strong>Waga:</strong></span>
-                            <span id="weight-value">...</span><span> kg</span>
+                            <span id="weight-value" th:if="${foundMeasurement}"
+                                  th:text="${foundMeasurement.weight}"></span>
+                            <span id="weight-value" th:unless="${foundMeasurement}">...</span><span> kg</span>
                         </li>
                     </ul>
                 </div>

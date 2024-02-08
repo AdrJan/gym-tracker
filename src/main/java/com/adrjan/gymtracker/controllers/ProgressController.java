@@ -62,9 +62,15 @@ public class ProgressController {
                 .build();
 
         LocalDate todayDate = LocalDate.now();
-        if(measurementRepository.findByCreatedAt(todayDate).isEmpty()) {
+        // Powinno zwrócić jedno.
+        List<Measurement> measurements = measurementRepository.findByCreatedAt(todayDate);
+        if (measurements.isEmpty()) {
             measurementRepository.save(measurement);
+        } else if (measurements.size() > 1) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "W bazie znajduje się kilka wyników pomiarów.");
         } else {
+            redirectAttributes.addFlashAttribute("foundMeasurement", measurements.get(0));
             redirectAttributes.addFlashAttribute("errorMessage",
                     "Dzisiejszego dnia już dokonałeś pomiaru." +
                             " Jeśli chcesz, możesz go edytować na liście obok.");
