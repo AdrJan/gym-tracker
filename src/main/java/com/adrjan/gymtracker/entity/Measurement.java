@@ -3,6 +3,7 @@ package com.adrjan.gymtracker.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -25,10 +26,10 @@ public class Measurement {
     private double rightThigh;
     private double weight;
 
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @PrePersist
     private void setDate() {
-        createdAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now().toLocalDate();
     }
 }
