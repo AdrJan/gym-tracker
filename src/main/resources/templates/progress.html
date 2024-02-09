@@ -36,8 +36,9 @@
             <h5>Wyniki</h5>
             <div class="border rounded p-2">
                 <ul class="list-group" style="max-height: 10rem; overflow-y: scroll;">
-                    <li th:onclick="'showMeasurement(\'' + ${measurement.key} + '\')'" class="list-group-item"
-                        th:each="measurement : ${measurementMap}">
+                    <li class="list-group-item hoverable" th:each="measurement, iter : ${measurementMap}" th:id="'result-id-' + ${iter.index}"
+                        th:onclick="'showMeasurement(' + ${measurement.key} + ','
+                    + ${iter.index} + ')'">
                         <div class="text-center">
                             <span th:text="${measurement.value}"></span>
                         </div>
@@ -99,9 +100,14 @@
     </div>
 </div>
 <script th:inline="javascript">
-    function showMeasurement(measurementId) {
+    function showMeasurement(measurementId, listId) {
         $.get('/progress/getMeasurement', { id: measurementId})
           .done(function(data) {
+            const elements = document.querySelectorAll('.chosen-result');
+            elements.forEach(element => {
+                element.classList.remove('chosen-result');
+            });
+
             document.getElementById("left-biceps-value").textContent=data.leftBiceps;
             document.getElementById("right-biceps-value").textContent=data.rightBiceps;
             document.getElementById("chest-value").textContent=data.chest;
@@ -109,6 +115,7 @@
             document.getElementById("left-thigh-value").textContent=data.leftThigh;
             document.getElementById("right-thigh-value").textContent=data.rightThigh;
             document.getElementById("weight-value").textContent=data.weight;
+            document.getElementById("result-id-" + listId).className += " chosen-result";
           })
           .fail(function(error) {
             console.error('Błąd:', error);

@@ -2,3 +2,11 @@
     max-height: 40rem;
     overflow-y: scroll;
 }
+li.hoverable:hover {
+    background-color: #33ccff;
+    transition: 0.5s background ease-in-out;
+    cursor: pointer;
+}
+li.chosen-result {
+    background-color: #33ccff;
+}
