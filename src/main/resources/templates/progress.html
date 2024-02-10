@@ -22,13 +22,18 @@
                 <div>
                     <button class="btn btn-primary btn-lg w-100">Zapisz</button>
                 </div>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('leftBiceps')}" th:errors="*{leftBiceps}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('rightBiceps')}" th:errors="*{rightBiceps}"></p>
+                <p class="text-center text-danger mt-4" th:errors="*{leftBiceps}"
+                   th:if="${#fields.hasErrors('leftBiceps')}"></p>
+                <p class="text-center text-danger mt-4" th:errors="*{rightBiceps}"
+                   th:if="${#fields.hasErrors('rightBiceps')}"></p>
                 <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></p>
                 <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('leftThigh')}" th:errors="*{leftThigh}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('rightThigh')}" th:errors="*{rightThigh}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}"></p>
+                <p class="text-center text-danger mt-4" th:errors="*{leftThigh}"
+                   th:if="${#fields.hasErrors('leftThigh')}"></p>
+                <p class="text-center text-danger mt-4" th:errors="*{rightThigh}"
+                   th:if="${#fields.hasErrors('rightThigh')}"></p>
+                <p class="text-center text-danger mt-4" th:errors="*{weight}"
+                   th:if="${#fields.hasErrors('weight')}"></p>
                 <p class="text-center text-danger mt-4" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </form>
         </div>
@@ -36,11 +41,12 @@
             <h5>Wyniki</h5>
             <div class="border rounded p-2">
                 <ul class="list-group" style="max-height: 10rem; overflow-y: scroll;">
-                    <li class="list-group-item hoverable" th:each="measurement, iter : ${measurementMap}" th:id="'result-id-' + ${iter.index}"
-                        th:onclick="'showMeasurement(' + ${measurement.key} + ','
+                    <li class="list-group-item hoverable" th:each="measurement, iter : ${measurements}"
+                        th:id="'result-id-' + ${iter.index}"
+                        th:onclick="'showMeasurement(' + ${measurement.id} + ','
                     + ${iter.index} + ')'">
                         <div class="text-center">
-                            <span th:text="${measurement.value}"></span>
+                            <span th:text="${measurement.createdAt}"></span>
                         </div>
                     </li>
                 </ul>
@@ -94,14 +100,29 @@
                 </div>
             </div>
         </div>
+        <div class="col-12 w-50">
+            <h5>Wykresy</h5>
+            <div class="border rounded p-2 measurement-stats">
+                <canvas id="myChart"></canvas>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'leftBiceps')">Lewy biceps</span>
+                <span class="measurement-stat"
+                      onclick="clickAndDraw(10, 'id', 'asc', 'rightBiceps')">Prawy biceps</span>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'chest')">Klatka</span>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'waist')">Pas</span>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'leftThigh')">Lewe udo</span>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'rightThigh')">Prawe udo</span>
+                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'weight')">Waga</span>
+            </div>
+        </div>
 
         <div th:include="layout :: div.footer">
         </div>
     </div>
 </div>
+<!-- JS -->
 <script th:inline="javascript">
     function showMeasurement(measurementId, listId) {
-        $.get('/progress/getMeasurement', { id: measurementId})
+        $.get('/progress/measurement', { id: measurementId})
           .done(function(data) {
             const elements = document.querySelectorAll('.chosen-result');
             elements.forEach(element => {
@@ -121,6 +142,102 @@
             console.error('Błąd:', error);
           });
 }
+
+var chart = null;
+
+    function clickAndDraw(size, orderBy, sortOrder, whatToDisplay) {
+        $.get('/progress/measurements', { page: 0, size: size, orderBy: orderBy, sortOrder: sortOrder })
+          .done(function(data) {
+            var mappedData = data.map(function(item) {
+                let yValue;
+                switch(whatToDisplay) {
+                    case 'leftBiceps':
+                        yValue = item.leftBiceps;
+                        break;
+                    case 'rightBiceps':
+                        yValue = item.rightBiceps;
+                        break;
+                    case 'chest':
+                        yValue = item.chest;
+                        break;
+                    case 'waist':
+                        yValue = item.waist;
+                        break;
+                    case 'leftThigh':
+                        yValue = item.leftThigh;
+                        break;
+                    case 'rightThigh':
+                        yValue = item.rightThigh;
+                        break;
+                    case 'weight':
+                    default:
+                        yValue = item.weight;
+                        break;
+                }
+                console.log(yValue);
+                console.log(whatToDisplay);
+                return {x: item.createdAt, y:yValue}
+            });
+            drawChart(mappedData);
+          })
+          .fail(function(error) {
+            console.error('Błąd:', error);
+          });
+    }
+
+function drawChart(map) {
+    let mapAsMap = new Map(Object.entries(map));
+    let keys = Array.from(mapAsMap.keys());
+    let values = Array.from(mapAsMap.values());
+    let maxValue = Math.max(...values);
+
+    if(chart != null)
+        chart.destroy();
+
+     chart = new Chart("myChart", {
+        type: "line",
+        data: {
+            datasets: [{
+                borderColor: "rgba(0,0,255,0.1)",
+                data: map
+            }]
+        },
+        options: {
+            animation: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+            },
+            scales: {
+                x: {
+                    title: {
+                        text: 'Data pomiaru',
+                        display: true,
+                        font: {
+                            size: 20,
+                            style: 'bold'
+                        }
+                    }
+                },
+                y: {
+                    title: {
+                        text: 'Wartość pomiaru',
+                        display: true,
+                        font: {
+                            size: 20,
+                            style: 'bold'
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+clickAndDraw(10, 'id', 'asc');
+
 </script>
+
 </body>
 </html>

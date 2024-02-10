@@ -4,6 +4,8 @@ import com.adrjan.gymtracker.entity.Measurement;
 import com.adrjan.gymtracker.model.MeasureForm;
 import com.adrjan.gymtracker.repositories.MeasurementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -33,11 +32,11 @@ public class ProgressController {
     public String showProgressPage(Model model) {
         if (!model.containsAttribute("measureForm"))
             model.addAttribute("measureForm", new MeasureForm());
-        Map<Integer, String> measurementMap = new HashMap<>();
-        getMeasurements(10).forEach(x -> measurementMap.put(
-                x.getId(),
-                x.getCreatedAt().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
-        model.addAttribute("measurementMap", measurementMap);
+
+        List<Measurement> measurements = getMeasurements(0, 10, "id", "desc");
+
+        model.addAttribute("measurements", measurements);
+
         return "progress";
     }
 
@@ -79,14 +78,22 @@ public class ProgressController {
         return "redirect:/progress";
     }
 
-    @GetMapping("/getMeasurements")
-    public @ResponseBody List<Measurement> getMeasurements(@RequestParam(defaultValue = "10") long limit) {
-        return StreamSupport.stream(measurementRepository.findAll().spliterator(), false)
-                .limit(limit)
+    @GetMapping("/measurements")
+    public @ResponseBody List<Measurement> getMeasurements(@RequestParam(defaultValue = "0") int page,
+                                                           @RequestParam(defaultValue = "10") int size,
+                                                           @RequestParam(required = false, defaultValue = "id") String sortBy,
+                                                           @RequestParam(required = false, defaultValue = "asc") String sortOrder) {
+        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc")
+                ? Sort.Direction.DESC
+                : Sort.Direction.ASC;
+
+        return StreamSupport.stream(measurementRepository
+                        .findAll(PageRequest.of(page, size, Sort.by(direction, sortBy)))
+                        .spliterator(), false)
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/getMeasurement")
+    @GetMapping("/measurement")
     public @ResponseBody Measurement getMeasurement(@RequestParam int id) {
         Optional<Measurement> measurement = measurementRepository.findById(id);
 

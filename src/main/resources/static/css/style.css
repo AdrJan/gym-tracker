@@ -10,3 +10,15 @@ li.hoverable:hover {
 li.chosen-result {
     background-color: #33ccff;
 }
+span.measurement-stat {
+    transition: transform 0.3s ease;
+    display: inline-block;
+    margin: 8px;
+}
+span.measurement-stat:hover {
+    transform: scale(1.10);
+    cursor: pointer;
+}
+div.measurement-stats {
+    text-align: center;
+}
