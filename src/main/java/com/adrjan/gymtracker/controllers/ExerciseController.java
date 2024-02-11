@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Controller
 @RequestMapping("/exercise")
@@ -32,12 +34,16 @@ public class ExerciseController {
         List<Exercise> exercises = new ArrayList<>();
         exerciseRepository.findAll().forEach(exercises::add);
 
-
         model.addAttribute("exercises", exercises);
         if (!model.containsAttribute("exerciseForm"))
             model.addAttribute("exerciseForm", new ExerciseForm());
 
         return "exercise";
+    }
+
+    @GetMapping("/getExercises")
+    public @ResponseBody List<Exercise> getExercises() {
+        return StreamSupport.stream(exerciseRepository.findAll().spliterator(), false).collect(Collectors.toList());
     }
 
     @GetMapping("/getExerciseVolume")
