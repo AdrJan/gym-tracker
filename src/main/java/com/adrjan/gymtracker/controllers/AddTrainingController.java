@@ -76,7 +76,12 @@ public class AddTrainingController {
                     }
                 }
         );
-        exerciseSerieRepository.saveAll(exerciseSerieList);
+        try {
+            exerciseSerieRepository.saveAll(exerciseSerieList);
+            redirectAttributes.addFlashAttribute("message", "Trening został pomyślnie dodany.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", "Wystąpił błąd poczas próby dodania treningu.");
+        }
         return "redirect:/add-training";
     }
 }

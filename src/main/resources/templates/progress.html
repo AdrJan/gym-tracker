@@ -32,18 +32,8 @@
                 <div>
                     <button class="btn btn-primary btn-lg w-100">Zapisz</button>
                 </div>
-                <p class="text-center text-danger mt-4" th:errors="*{leftBiceps}"
-                   th:if="${#fields.hasErrors('leftBiceps')}"></p>
-                <p class="text-center text-danger mt-4" th:errors="*{rightBiceps}"
-                   th:if="${#fields.hasErrors('rightBiceps')}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('chest')}" th:errors="*{chest}"></p>
-                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors('waist')}" th:errors="*{waist}"></p>
-                <p class="text-center text-danger mt-4" th:errors="*{leftThigh}"
-                   th:if="${#fields.hasErrors('leftThigh')}"></p>
-                <p class="text-center text-danger mt-4" th:errors="*{rightThigh}"
-                   th:if="${#fields.hasErrors('rightThigh')}"></p>
-                <p class="text-center text-danger mt-4" th:errors="*{weight}"
-                   th:if="${#fields.hasErrors('weight')}"></p>
+
+                <p class="text-center text-danger mt-4" th:if="${#fields.hasErrors()}">Uzupełnij poprawnie pola!</p>
                 <p class="text-center text-danger mt-4" th:if="${errorMessage}" th:text="${errorMessage}"></p>
             </form>
         </div>

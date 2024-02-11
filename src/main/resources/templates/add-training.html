@@ -17,7 +17,7 @@
 
 <body>
 <div th:include="layout :: div.nav-bar"></div>
-<!--<th:p class="row col-md-12 text-danger justify-content-center" th:if="${exercisesList.empty}">Brak ćwiczeń w bazie! Aby dodać trening najpierw musisz dodać ćwiczenie do bazy.</th:p>-->
+<th:p class="row col-md-12 text-danger justify-content-center mb-2" th:if="${message}" th:text="${message}"></th:p>
 <div class="container">
     <form id="exercise-form" method="post" class="d-flex flex-wrap" th:object="${trainingSessionForm}" onsubmit="return validate()">
         <div class="row col-md-12 justify-content-center">
