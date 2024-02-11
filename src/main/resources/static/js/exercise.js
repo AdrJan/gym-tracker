@@ -3,6 +3,7 @@ var chart = null;
 $('li.list-group-item').click(function() {
     var exerciseId = $(this).data('exerciseid');
 
+
     $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
         .done(function(data) {
             drawChart(data);

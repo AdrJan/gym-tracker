@@ -5,7 +5,6 @@ import com.adrjan.gymtracker.entity.ExerciseSerie;
 import com.adrjan.gymtracker.entity.ExerciseSession;
 import com.adrjan.gymtracker.entity.TrainingSession;
 import com.adrjan.gymtracker.model.TrainingSessionForm;
-import com.adrjan.gymtracker.repositories.ExerciseRepository;
 import com.adrjan.gymtracker.repositories.ExerciseSerieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,15 +24,11 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/add-training")
 public class AddTrainingController {
-
-    @Autowired
-    ExerciseRepository exerciseRepository;
     @Autowired
     ExerciseSerieRepository exerciseSerieRepository;
 
     @GetMapping
     public String showPage(Model model) {
-        model.addAttribute("exercisesList", exerciseRepository.findAll());
         if (!model.containsAttribute("trainingSessionForm"))
             model.addAttribute("trainingSessionForm", new TrainingSessionForm());
         return "add-training";
