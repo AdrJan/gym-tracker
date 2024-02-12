@@ -94,7 +94,7 @@ function drawChart(map) {
             }]
         },
         options: {
-            animation: false,
+            animation: true,
             plugins: {
                 legend: {
                     display: false
@@ -102,6 +102,7 @@ function drawChart(map) {
             },
             scales: {
                 x: {
+                    reverse: true,
                     title: {
                         text: 'Data pomiaru',
                         display: false,
