@@ -103,15 +103,22 @@
         <div class="col-12 w-50">
             <h5>Wykresy</h5>
             <div class="border rounded p-2 measurement-stats">
-                <canvas id="myChart"></canvas>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'leftBiceps')">Lewy biceps</span>
+                <canvas class="h-50 w-100" id="myChart"></canvas>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 1, 'id', 'desc', '')">1</span>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 5, 'id', 'desc', '')">5</span>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 10, 'id', 'desc', '')">10</span>
+                <br/>
                 <span class="measurement-stat"
-                      onclick="clickAndDraw(10, 'id', 'asc', 'rightBiceps')">Prawy biceps</span>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'chest')">Klatka</span>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'waist')">Pas</span>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'leftThigh')">Lewe udo</span>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'rightThigh')">Prawe udo</span>
-                <span class="measurement-stat" onclick="clickAndDraw(10, 'id', 'asc', 'weight')">Waga</span>
+                      onclick="clickAndDraw(this, 0, 'id', 'desc', 'leftBiceps')">Lewy biceps</span>
+                <span class="measurement-stat"
+                      onclick="clickAndDraw(this, 0, 'id', 'desc', 'rightBiceps')">Prawy biceps</span>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 0, 'id', 'desc', 'chest')">Klatka</span>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 0, 'id', 'desc', 'waist')">Pas</span>
+                <span class="measurement-stat"
+                      onclick="clickAndDraw(this, 0, 'id', 'desc', 'leftThigh')">Lewe udo</span>
+                <span class="measurement-stat"
+                      onclick="clickAndDraw(this, 0, 'id', 'desc', 'rightThigh')">Prawe udo</span>
+                <span class="measurement-stat" onclick="clickAndDraw(this, 0, 'id', 'desc', 'weight')">Waga</span>
             </div>
         </div>
 

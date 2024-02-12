@@ -22,3 +22,6 @@ span.measurement-stat:hover {
 div.measurement-stats {
     text-align: center;
 }
+.underlined {
+    text-decoration: underline;
+}
