@@ -11,55 +11,42 @@
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer th:src="@{/js/home.js}"></script>
     <title>GymTracker</title>
 </head>
 
 <body>
-
-<div class="container text-center">
-    <h1>Gym Tracker</h1>
+<div class="container text-center" style="height: 50px;">
+    <!--    Potencjalnie miejsce na logo.-->
 </div>
 
-<div class="container text-center">
-    <div class="row justify-content-center">
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Nowy trening</h5>
-                    <p class="card-text">Dodaj swój trening by móc na bieżąco śledzić swoje postępy.</p>
-                    <a th:href="@{/add-training}" class="btn btn-primary"> DODAJ </a>
-                </div>
+<div class="container">
+    <div style="height: 400px;">
+        <div class="row">
+            <div class="col">
+                <a style="text-decoration: none; color: inherit;" th:href="@{/add-training}">
+                    <h3 class="pointable" id="new-training">Nowy trening</h3>
+                </a>
+                <a style="text-decoration: none; color: inherit;" th:href="@{/exercise}">
+                    <h3 class="pointable" id="exercise-base" th:href="@{/exercise}">Baza ćwiczeń</h3>
+                </a>
+                <a style="text-decoration: none; color: inherit;" th:href="@{/trainings}">
+                    <h3 class="pointable" id="previous-trainings" th:href="@{/trainings}">Treningi</h3>
+                </a>
+                <a style="text-decoration: none; color: inherit;" th:href="@{/progress}">
+                    <h3 class="pointable" id="progress" th:href="@{/progress}">Progres</h3>
+                </a>
             </div>
-        </div>
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Baza ćwiczeń</h5>
-                    <p class="card-text">Zarządzaj dostępnymi ćwiczeniami.</p>
-                    <a th:href="@{/exercise}" class="btn btn-primary"> DODAJ </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Treningi</h5>
-                    <p class="card-text">Zarządzaj swoimi obecnymi treningami.</p>
-                    <a th:href="@{/trainings}" class="btn btn-primary"> PRZJEDŹ DO </a>
-                </div>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">Progres</h5>
-                    <p class="card-text">Kontroluj swoje wyniki.</p>
-                    <a th:href="@{/progress}" class="btn btn-primary"> PRZJEDŹ DO </a>
-                </div>
+            <div class="col"></div>
+            <div class="col-6">
+                <div class="disappearing m-6 fs-4 text-start" id="new-training-desc"></div>
+                <div class="disappearing m-6 fs-4 text-center" id="exercise-base-desc"></div>
+                <div class="disappearing fs-4 text-end" id="previous-trainings-desc"></div>
+                <div class="disappearing fs-4 text-center" id="progress-desc"></div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 
