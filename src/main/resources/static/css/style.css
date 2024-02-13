@@ -25,3 +25,18 @@ div.measurement-stats {
 .underlined {
     text-decoration: underline;
 }
+.disappearing {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+h3.pointable {
+    cursor: pointer;
+}
+.pointable::after {
+    content: '<';
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+.pointable:hover::after {
+    opacity: 1;
+}
