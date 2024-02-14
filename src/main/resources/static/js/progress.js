@@ -2,6 +2,13 @@ var chart = null;
 var chosenMeasurementSize = 1;
 var chosenMeasurementType = 'weight';
 
+//Setting default selection.
+document.getElementById("default-stat-range").classList.add("underlined");
+document.getElementById("default-stat").classList.add("underlined");
+getDataAndDrawChart(5, 'id', 'desc', 'weight');
+
+//TODO: Naming should be better.
+//TODO: Could be refactored.
 function showMeasurement(measurementId, listId) {
     $.get('/progress/measurement', { id: measurementId})
       .done(function(data) {
@@ -25,19 +32,29 @@ function showMeasurement(measurementId, listId) {
 }
 
 function clickAndDraw(obj, size, orderBy, sortOrder, whatToDisplay) {
-    const elements = document.querySelectorAll('.measurement-stat');
-    elements.forEach(element => {
-        element.classList.remove('underlined');
-    });
+    if(size === 0) {
+        const elements = document.querySelectorAll('.measurement-stat');
+        elements.forEach(element => {
+            element.classList.remove('underlined');
+        });
+        size = chosenMeasurementSize;
+    }
+    if(whatToDisplay.length === 0) {
+        const elements = document.querySelectorAll('.measurement-stat-range');
+        elements.forEach(element => {
+            element.classList.remove('underlined');
+        });
+        whatToDisplay = chosenMeasurementType;
+    }
     obj.classList.add('underlined');
 
-    if(size === 0)
-        size = chosenMeasurementSize;
-    if(whatToDisplay.length === 0)
-        whatToDisplay = chosenMeasurementType;
     chosenMeasurementSize = size;
     chosenMeasurementType = whatToDisplay;
 
+    getDataAndDrawChart(size, orderBy, sortOrder, whatToDisplay);
+}
+
+function getDataAndDrawChart(size, orderBy, sortOrder, whatToDisplay) {
     $.get('/progress/measurements', { page: 0, size: size, orderBy: orderBy, sortOrder: sortOrder })
       .done(function(data) {
         var mappedData = data.map(function(item) {
@@ -69,6 +86,7 @@ function clickAndDraw(obj, size, orderBy, sortOrder, whatToDisplay) {
             }
             return {x: item.createdAt, y:yValue}
         });
+        console.log(mappedData);
         drawChart(mappedData);
       })
       .fail(function(error) {

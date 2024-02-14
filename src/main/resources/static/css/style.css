@@ -3,19 +3,20 @@
     overflow-y: scroll;
 }
 li.hoverable:hover {
-    background-color: #33ccff;
+    background-color: #F0F0F0;
     transition: 0.5s background ease-in-out;
     cursor: pointer;
 }
 li.chosen-result {
-    background-color: #33ccff;
+    background-color: #F0F0F0;
 }
 span.measurement-stat {
     transition: transform 0.3s ease;
     display: inline-block;
     margin: 8px;
 }
-span.measurement-stat:hover {
+span.measurement-stat,
+span.measurement-stat-range:hover {
     transform: scale(1.10);
     cursor: pointer;
 }
@@ -39,4 +40,14 @@ h3.pointable {
 }
 .pointable:hover::after {
     opacity: 1;
+}
+.btn-simple {
+  border: none;
+  background-color: inherit;
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+button.btn-simple:hover {
+  transform: scale(1.3);
 }
