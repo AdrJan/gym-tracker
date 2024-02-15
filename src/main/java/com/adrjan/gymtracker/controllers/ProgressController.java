@@ -67,7 +67,7 @@ public class ProgressController {
             measurementRepository.save(measurement);
         } else if (measurements.size() > 1) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
-                    "W bazie znajduje się kilka wyników pomiarów.");
+                    "W bazie znajduje się kilka wyników pomiarów dotyczących tego samego dnia.");
         } else {
             redirectAttributes.addFlashAttribute("foundMeasurement", measurements.get(0));
             redirectAttributes.addFlashAttribute("errorMessage",
