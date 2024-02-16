@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -99,5 +100,16 @@ public class ProgressController {
 
         return measurement.orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Measurement not found with id: " + id));
+    }
+
+    @DeleteMapping("/deleteMeasurement/{id}")
+    public ResponseEntity<?> deleteMeasurement(@PathVariable int id) {
+        Optional<Measurement> measurement = measurementRepository.findById(id);
+        if (measurement.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            measurementRepository.delete(measurement.get());
+            return ResponseEntity.ok().build();
+        }
     }
 }
