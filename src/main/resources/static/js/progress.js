@@ -2,6 +2,8 @@ var chart = null;
 var chosenMeasurementSize = 1;
 var chosenMeasurementType = 'weight';
 
+var selectedMeasurementId = null;
+
 //Setting default selection.
 document.getElementById("default-stat-range").classList.add("underlined");
 document.getElementById("default-stat").classList.add("underlined");
@@ -16,6 +18,8 @@ function showMeasurement(measurementId, listId) {
         elements.forEach(element => {
             element.classList.remove('chosen-result');
         });
+        selectedMeasurementId = measurementId;
+        document.getElementById("change-button").classList.remove("disabled");
 
         document.getElementById("left-biceps-value").textContent=data.leftBiceps;
         document.getElementById("right-biceps-value").textContent=data.rightBiceps;
@@ -25,6 +29,15 @@ function showMeasurement(measurementId, listId) {
         document.getElementById("right-thigh-value").textContent=data.rightThigh;
         document.getElementById("weight-value").textContent=data.weight;
         document.getElementById("result-id-" + listId).className += " chosen-result";
+
+        document.getElementById("change-left-biceps-input").placeholder=data.leftBiceps;
+        document.getElementById("change-right-biceps-input").placeholder=data.rightBiceps;
+        document.getElementById("change-chest-input").placeholder=data.chest;
+        document.getElementById("change-waist-input").placeholder=data.waist;
+        document.getElementById("change-left-thigh-input").placeholder=data.leftThigh;
+        document.getElementById("change-right-thigh-input").placeholder=data.rightThigh;
+        document.getElementById("change-weight-input").placeholder=data.weight;
+        document.getElementById("modal-title").textContent=data.createdAt;
       })
       .fail(function(error) {
         console.error('Błąd:', error);
