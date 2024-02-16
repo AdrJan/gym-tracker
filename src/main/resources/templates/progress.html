@@ -62,48 +62,57 @@
                                         <span class="w-50">Lewy biceps:</span>
                                         <input class="form-control w-25 mb-2" id="change-left-biceps-input"
                                                placeholder="..." th:field="*{leftBiceps}">
+                                        <span class="w-25">cm</span>
                                     </div>
                                     <div class="row">
                                         <span class="w-50">Prawy biceps:</span>
                                         <input class="form-control mb-2 w-25" id="change-right-biceps-input"
                                                placeholder="..."
                                                th:field="*{rightBiceps}">
+                                        <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Klatka:</span>
                                         <input class="form-control mb-2 w-25" id="change-chest-input" placeholder="..."
                                                th:field="*{chest}">
+                                        <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Pas:</span>
                                         <input class="form-control mb-2 w-25" id="change-waist-input" placeholder="..."
                                                th:field="*{waist}">
+                                        <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Lewe udo:</span>
                                         <input class="form-control mb-2 w-25" id="change-left-thigh-input"
                                                placeholder="..." th:field="*{leftThigh}">
+                                        <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Prawe udo:</span>
                                         <input class="form-control mb-2 w-25" id="change-right-thigh-input"
                                                placeholder="..." th:field="*{rightThigh}">
+                                        <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Waga:</span>
                                         <input class="form-control mb-2 w-25" id="change-weight-input" placeholder="..."
                                                th:field="*{weight}">
+                                        <span class="w-25">kg</span>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
                                 <button class="btn-simple" style="font-size: 18px;" type="button">Zmień</button>
-                                <button class="btn-simple" style="font-size: 18px;" type="button">Usuń</button>
+                                <button class="btn-simple" onclick="deleteMeasurementOnModal()" style="font-size: 18px;"
+                                        type="button">Usuń
+                                </button>
                             </div>
                         </div>
                     </div>
