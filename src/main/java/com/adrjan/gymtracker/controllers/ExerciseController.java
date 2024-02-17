@@ -76,6 +76,8 @@ public class ExerciseController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteExercise(@PathVariable int id) {
+        //TODO: dodać obsługę błędów.
+        //TODO: nie powinno przekierowywać na stronę. Powinno zwracać 404, 200 etc.
         exerciseRepository.deleteById(id);
         return "redirect:/exercise";
     }
