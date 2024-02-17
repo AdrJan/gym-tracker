@@ -48,7 +48,8 @@
                     </button>
                 </div>
                 <!-- Modal -->
-                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade modal-sm" id="modal-change-data"
+                <div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade modal-sm"
+                     id="modal-change-data"
                      role="dialog" tabindex="-1">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -57,59 +58,59 @@
                                 <button class="btn-simple" data-bs-dismiss="modal" type="button">x</button>
                             </div>
                             <div class="modal-body">
-                                <form method="post" th:object="${measureForm}">
+                                <!-- TODO: DODAC WALIDACJE NA INPUTY -->
+                                <form>
                                     <div class="row">
                                         <span class="w-50">Lewy biceps:</span>
                                         <input class="form-control w-25 mb-2" id="change-left-biceps-input"
-                                               placeholder="..." th:field="*{leftBiceps}">
+                                               placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
                                     <div class="row">
                                         <span class="w-50">Prawy biceps:</span>
                                         <input class="form-control mb-2 w-25" id="change-right-biceps-input"
-                                               placeholder="..."
-                                               th:field="*{rightBiceps}">
+                                               placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Klatka:</span>
-                                        <input class="form-control mb-2 w-25" id="change-chest-input" placeholder="..."
-                                               th:field="*{chest}">
+                                        <input class="form-control mb-2 w-25" id="change-chest-input" placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Pas:</span>
-                                        <input class="form-control mb-2 w-25" id="change-waist-input" placeholder="..."
-                                               th:field="*{waist}">
+                                        <input class="form-control mb-2 w-25" id="change-waist-input" placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Lewe udo:</span>
                                         <input class="form-control mb-2 w-25" id="change-left-thigh-input"
-                                               placeholder="..." th:field="*{leftThigh}">
+                                               placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Prawe udo:</span>
                                         <input class="form-control mb-2 w-25" id="change-right-thigh-input"
-                                               placeholder="..." th:field="*{rightThigh}">
+                                               placeholder="...">
                                         <span class="w-25">cm</span>
                                     </div>
 
                                     <div class="row">
                                         <span class="w-50">Waga:</span>
-                                        <input class="form-control mb-2 w-25" id="change-weight-input" placeholder="..."
-                                               th:field="*{weight}">
+                                        <input class="form-control mb-2 w-25" id="change-weight-input"
+                                               placeholder="...">
                                         <span class="w-25">kg</span>
                                     </div>
                                 </form>
                             </div>
                             <div class="modal-footer">
-                                <button class="btn-simple" style="font-size: 18px;" type="button">Zmień</button>
+                                <button class="btn-simple" onclick="updateMeasurementOnModal()" style="font-size: 18px;"
+                                        type="button">Zmień
+                                </button>
                                 <button class="btn-simple" onclick="deleteMeasurementOnModal()" style="font-size: 18px;"
                                         type="button">Usuń
                                 </button>

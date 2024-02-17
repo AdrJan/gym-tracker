@@ -63,6 +63,24 @@ function deleteMeasurementOnModal() {
     });
 }
 
+function updateMeasurementOnModal() {
+    fetch('/progress/deleteMeasurement/' + selectedMeasurementId, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(function(response) {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      location.reload();
+    })
+    .catch(function(error) {
+      console.error('Wystąpił błąd podczas usuwania:', error.message);
+    });
+}
+
 function clickAndDraw(obj, size, orderBy, sortOrder, whatToDisplay) {
     if(size === 0) {
         const elements = document.querySelectorAll('.measurement-stat');

@@ -3,6 +3,7 @@ package com.adrjan.gymtracker.controllers;
 import com.adrjan.gymtracker.entity.Measurement;
 import com.adrjan.gymtracker.model.MeasureForm;
 import com.adrjan.gymtracker.repositories.MeasurementRepository;
+import com.adrjan.gymtracker.service.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -26,8 +27,11 @@ import java.util.stream.StreamSupport;
 @RequestMapping("/progress")
 public class ProgressController {
 
+    //TODO: może progressRepository, albo measurementService?
     @Autowired
     MeasurementRepository measurementRepository;
+    @Autowired
+    ProgressService progressService;
 
     @GetMapping
     public String showProgressPage(Model model) {
@@ -103,13 +107,28 @@ public class ProgressController {
     }
 
     @DeleteMapping("/deleteMeasurement/{id}")
-    public ResponseEntity<?> deleteMeasurement(@PathVariable int id) {
+    public ResponseEntity<String> deleteMeasurement(@PathVariable int id) {
         Optional<Measurement> measurement = measurementRepository.findById(id);
         if (measurement.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         } else {
             measurementRepository.delete(measurement.get());
             return ResponseEntity.ok().build();
+        }
+    }
+
+    @PutMapping("/updateMeasurement/{id}")
+    public ResponseEntity<String> updateMeasurement(@PathVariable int id, @RequestBody Measurement updatedMeasurement) {
+        Optional<Measurement> measurement = measurementRepository.findById(id);
+        if (measurement.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nie udało się znaleźć pomiaru.");
+        } else {
+            if (progressService.updateMeasurement(id, updatedMeasurement)) {
+                return ResponseEntity.ok("Udało się prawidłowo zaktualizować dane.");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Wystąpił błąd podczas aktualizacji pomiaru");
+            }
         }
     }
 }

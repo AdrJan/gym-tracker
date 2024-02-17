@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Builder
+@ToString
 public class Measurement {
 
     @Id
