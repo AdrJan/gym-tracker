@@ -4,6 +4,15 @@ var chosenMeasurementType = 'weight';
 
 var selectedMeasurementId = null;
 
+//Clear form
+document.getElementById('change-left-biceps-input').value="",
+document.getElementById('change-right-biceps-input').value="",
+document.getElementById('change-left-thigh-input').value="",
+document.getElementById('change-right-thigh-input').value="",
+document.getElementById('change-waist-input').valu="",
+document.getElementById('change-weight-input').value="",
+document.getElementById('change-chest-input').value="",
+
 //Setting default selection.
 document.getElementById("default-stat-range").classList.add("underlined");
 document.getElementById("default-stat").classList.add("underlined");
@@ -64,11 +73,22 @@ function deleteMeasurementOnModal() {
 }
 
 function updateMeasurementOnModal() {
-    fetch('/progress/deleteMeasurement/' + selectedMeasurementId, {
+    var updateMeasurementFormData = {
+      leftBiceps: document.getElementById('change-left-biceps-input').value,
+      rightBiceps: document.getElementById('change-right-biceps-input').value,
+      leftThigh: document.getElementById('change-left-thigh-input').value,
+      rightThigh: document.getElementById('change-right-thigh-input').value,
+      waist: document.getElementById('change-waist-input').value,
+      weight: document.getElementById('change-weight-input').value,
+      chest: document.getElementById('change-chest-input').value,
+    };
+
+    fetch('/progress/updateMeasurement/' + selectedMeasurementId, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(updateMeasurementFormData)
     })
     .then(function(response) {
       if (!response.ok) {

@@ -2,11 +2,8 @@ package com.adrjan.gymtracker.controllers;
 
 import com.adrjan.gymtracker.entity.Measurement;
 import com.adrjan.gymtracker.model.MeasureForm;
-import com.adrjan.gymtracker.repositories.MeasurementRepository;
 import com.adrjan.gymtracker.service.ProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,19 +14,13 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/progress")
 public class ProgressController {
 
-    //TODO: może progressRepository, albo measurementService?
-    @Autowired
-    MeasurementRepository measurementRepository;
     @Autowired
     ProgressService progressService;
 
@@ -55,26 +46,16 @@ public class ProgressController {
             return "redirect:/progress";
         }
 
-        Measurement measurement = Measurement.builder()
-                .leftBiceps(measureForm.getLeftBiceps())
-                .rightBiceps(measureForm.getRightBiceps())
-                .chest(measureForm.getChest())
-                .waist(measureForm.getWaist())
-                .leftThigh(measureForm.getLeftThigh())
-                .rightThigh(measureForm.getRightThigh())
-                .weight(measureForm.getWeight())
-                .build();
+        ProgressService.PostedMeasurementResult postedMeasurementResult = progressService.postMeasurement(measureForm);
+        boolean postSuccess = postedMeasurementResult.getSuccess();
+        Measurement postMeasurement = postedMeasurementResult.getMeasurement();
 
-        LocalDate todayDate = LocalDate.now();
-        // Powinno zwrócić jedno.
-        List<Measurement> measurements = measurementRepository.findByCreatedAt(todayDate);
-        if (measurements.isEmpty()) {
-            measurementRepository.save(measurement);
-        } else if (measurements.size() > 1) {
+        if (!postSuccess && Objects.isNull(postMeasurement))
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
                     "W bazie znajduje się kilka wyników pomiarów dotyczących tego samego dnia.");
-        } else {
-            redirectAttributes.addFlashAttribute("foundMeasurement", measurements.get(0));
+
+        if (!postSuccess) {
+            redirectAttributes.addFlashAttribute("foundMeasurement", postMeasurement);
             redirectAttributes.addFlashAttribute("errorMessage",
                     "Dzisiejszego dnia już dokonałeś pomiaru." +
                             " Jeśli chcesz, możesz go edytować na liście obok.");
@@ -88,47 +69,31 @@ public class ProgressController {
                                                            @RequestParam(defaultValue = "10") int size,
                                                            @RequestParam(required = false, defaultValue = "id") String sortBy,
                                                            @RequestParam(required = false, defaultValue = "asc") String sortOrder) {
-        Sort.Direction direction = sortOrder.equalsIgnoreCase("desc")
-                ? Sort.Direction.DESC
-                : Sort.Direction.ASC;
-
-        return StreamSupport.stream(measurementRepository
-                        .findAll(PageRequest.of(page, size, Sort.by(direction, sortBy)))
-                        .spliterator(), false)
-                .collect(Collectors.toList());
+        return progressService.getMeasurements(page, size, sortBy, sortOrder);
     }
 
     @GetMapping("/measurement")
     public @ResponseBody Measurement getMeasurement(@RequestParam int id) {
-        Optional<Measurement> measurement = measurementRepository.findById(id);
-
-        return measurement.orElseThrow(() -> new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Measurement not found with id: " + id));
+        return progressService.getMeasurement(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Pomiar nie został znaleziony"));
     }
 
     @DeleteMapping("/deleteMeasurement/{id}")
     public ResponseEntity<String> deleteMeasurement(@PathVariable int id) {
-        Optional<Measurement> measurement = measurementRepository.findById(id);
-        if (measurement.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        } else {
-            measurementRepository.delete(measurement.get());
-            return ResponseEntity.ok().build();
-        }
+        if (progressService.deleteMeasurement(id))
+            return ResponseEntity.ok("Pomiar został poprawnie usnięty");
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Pomiar nie mógl być poprawnie usunięty.");
     }
 
     @PutMapping("/updateMeasurement/{id}")
     public ResponseEntity<String> updateMeasurement(@PathVariable int id, @RequestBody Measurement updatedMeasurement) {
-        Optional<Measurement> measurement = measurementRepository.findById(id);
-        if (measurement.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nie udało się znaleźć pomiaru.");
-        } else {
-            if (progressService.updateMeasurement(id, updatedMeasurement)) {
-                return ResponseEntity.ok("Udało się prawidłowo zaktualizować dane.");
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Wystąpił błąd podczas aktualizacji pomiaru");
-            }
-        }
+        if (progressService.updateMeasurement(id, updatedMeasurement))
+            return ResponseEntity.ok("Udało się prawidłowo zaktualizować dane.");
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Wystąpił błąd podczas aktualizacji pomiaru");
     }
 }
