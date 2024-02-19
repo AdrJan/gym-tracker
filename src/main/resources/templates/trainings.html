@@ -42,8 +42,8 @@
             <h3 class="text-center pb-2">Treningi</h3>
             <div class="list-group" th:each="training: ${trainings}">
                 <a class="list-group-item list-group-item-action text-center"
-                   th:href="@{/trainings/{id}(id=${training.key.id})}"
-                   th:text="${training.value}"/>
+                   th:href="@{/trainings/{id}(id=${training.id})}"
+                   th:text="${#dates.format(training.createdAt, 'dd-MM-yyyy [HH:mm]')}"/>
             </div>
         </div>
     </div>
