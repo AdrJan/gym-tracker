@@ -12,7 +12,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/trainings")
 public class TrainingsController {
 
-
     @Autowired
     private TrainingsService trainingsService;
 
