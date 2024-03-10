@@ -15,6 +15,7 @@ span.measurement-stat {
     display: inline-block;
     margin: 8px;
 }
+.enlarge-on-hover,
 span.measurement-stat,
 span.measurement-stat-range:hover {
     transform: scale(1.10);
@@ -30,7 +31,7 @@ div.measurement-stats {
     opacity: 0;
     transition: opacity 1s ease-in-out;
 }
-h3.pointable {
+.pointable {
     cursor: pointer;
 }
 .pointable::after {

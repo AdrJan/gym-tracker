@@ -22,37 +22,39 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-6">
-            <div class="card float-end" style="width: 39rem; height: 30rem;">
-                <h5 class="card-header">Lista ćwiczeń</h5>
-                <div class="card-body">
-                    <ul class="scroll-it list-group card-text mx-auto overflow-auto"
-                        style="width: 36rem; height: 24rem;">
-                        <li class="list-group-item" th:each="exercise : ${exercises}"
-                            th:attr="data-exerciseId=${exercise.id}">
-                            <form th:method="delete" th:action="@{/exercise/delete/{id}(id=${exercise.id})}">
-                                <span th:text="${exercise.name}"/>
-                                <button class="btn btn-danger btn-sm float-end">usuń</button>
-                            </form>
-                        </li>
-                        <p th:if="${exercises.empty}" class="text-danger text-center">Brak dostępnych ćwiczeń.</p>
-                    </ul>
-                </div>
-                <div class="card-footer"></div>
+            <h5>Lista ćwiczeń</h5>
+            <div class="border rounded p-2">
+                <ul class="scroll-it list-group mx-auto overflow-auto"
+                    style="width: 36rem; height: 24rem;">
+                    <li class="list-group-item" th:attr="data-exerciseId=${exercise.id}"
+                        th:each="exercise : ${exercises}">
+                        <form th:action="@{/exercise/delete/{id}(id=${exercise.id})}" th:method="delete">
+                            <span class="pointable enlarge-on-hover" th:text="${exercise.name}"/>
+                            <button class="btn-simple" style="font-size: 14px; float: right;"
+                                    type="button">Usuń
+                            </button>
+                        </form>
+                    </li>
+                    <p class="text-danger text-center" th:if="${exercises.empty}">Brak dostępnych ćwiczeń.</p>
+                </ul>
             </div>
         </div>
         <div class="col-6">
-            <div class="card p-3" style="height: 20rem; width: 40rem;">
-                <canvas id="myChart"></canvas>
+            <div>
+                <h5>Objętość ćwiczenia</h5>
+                <canvas class="border rounded p-2" id="myChart" width="400">
+                    testowo
+                </canvas>
             </div>
 
-            <div class="card mt-2" style="width: 40rem;">
-                <div class="card-body p-3">
-                    <h5 class="card-title">Nowe ćwiczenie</h5>
-                    <p class="card-text">Dodaj nowe ćwiczenie do bazy.</p>
+            <div class="col-6">
+                <br/>
+                <h5>Nowe ćwiczenie</h5>
+                <div class="border rounded p-2">
                     <form method="post" th:object="${exerciseForm}">
-                        <input th:field="*{name}">
+                        <input class="m-2" placeholder="nazwa ćwiczenia" th:field="*{name}">
                         <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                        <button class="btn btn-primary float-end">DODAJ</button>
+                        <button class="btn-simple">+</button>
                     </form>
                 </div>
             </div>
