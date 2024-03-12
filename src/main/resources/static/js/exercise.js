@@ -1,4 +1,5 @@
 var chart = null;
+drawChart(new Map([]));
 
 $('li.list-group-item').click(function() {
     var exerciseId = $(this).data('exerciseid');
@@ -41,7 +42,6 @@ function drawChart(map) {
             scales: {
                 x: {
                     title: {
-                        text: 'Trening',
                         display: true,
                         font: {
                             size: 20,
@@ -51,7 +51,6 @@ function drawChart(map) {
                 },
                 y: {
                     title: {
-                        text: 'Objętość ćwiczenia',
                         display: true,
                         font: {
                             size: 20,

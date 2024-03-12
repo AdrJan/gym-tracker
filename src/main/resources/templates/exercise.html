@@ -40,22 +40,30 @@
             </div>
         </div>
         <div class="col-6">
-            <div>
+            <div class="d-inline">
                 <h5>Objętość ćwiczenia</h5>
-                <canvas class="border rounded p-2" id="myChart" width="400">
-                    testowo
-                </canvas>
+                <canvas height="260" id="myChart" width="600"/>
             </div>
 
-            <div class="col-6">
-                <br/>
-                <h5>Nowe ćwiczenie</h5>
-                <div class="border rounded p-2">
-                    <form method="post" th:object="${exerciseForm}">
-                        <input class="m-2" placeholder="nazwa ćwiczenia" th:field="*{name}">
-                        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-                        <button class="btn-simple">+</button>
-                    </form>
+            <div class="row mt-1">
+                <div class="col-6">
+                    <h5>Nowe ćwiczenie</h5>
+                    <div class="border rounded p-2">
+                        <form method="post" th:object="${exerciseForm}">
+                            <input class="m-2" placeholder="nazwa nowego ćwiczenia" th:field="*{name}">
+                            <span th:errors="*{name}" th:if="${#fields.hasErrors('name')}"></span>
+                            <button class="btn-simple">+</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <h5>Szukaj ćwiczenia</h5>
+                    <div class="border rounded p-2">
+                        <form method="post" th:object="${exerciseForm}">
+                            <input class="m-2" placeholder="nazwa ćwiczenia" th:field="*{name}">
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
