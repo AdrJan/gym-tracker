@@ -1,16 +1,16 @@
 var chart = null;
 drawChart(new Map([]));
 
+//TODO: pojawia się error przy usuwaniu elementów. Zweryfikować i usunąć.
 $('li.list-group-item').click(function() {
     var exerciseId = $(this).data('exerciseid');
-
 
     $.get('/exercise/getExerciseVolume', { exerciseId: exerciseId, limit: 10 })
         .done(function(data) {
             drawChart(data);
         })
         .fail(function(error) {
-            console.error('Błąd:', error);
+            console.error('Błąd: ' + exerciseId);
     });
 });
 
@@ -64,12 +64,24 @@ function drawChart(map) {
     });
 }
 
-    function clickAndDraw(exerciseId, limit) {
-        $.get('/getExerciseVolume', { exerciseId: exerciseId, limit: limit })
-          .done(function(data) {
-            drawChart(data);
-          })
-          .fail(function(error) {
-            console.error('Błąd:', error);
-          });
+function clickAndDraw(exerciseId, limit) {
+    $.get('/getExerciseVolume', { exerciseId: exerciseId, limit: limit })
+      .done(function(data) {
+        drawChart(data);
+      })
+      .fail(function(error) {
+        console.error('Błąd:', error);
+      });
+}
+
+
+var exerciseList = document.querySelectorAll('li.list-group-item');
+
+function filterExercises() {
+    var inputValue = document.querySelector('#exercise-search-input').value.toLowerCase().trim();
+
+    for(var i = 0; i < exerciseList.length; i++) {
+        var exerciseElement = exerciseList[i];
+        exerciseElement.style.display = exerciseElement.querySelector('span').textContent.toLowerCase().includes(inputValue) ? '' : 'none';
     }
+}

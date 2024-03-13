@@ -30,8 +30,7 @@
                         th:each="exercise : ${exercises}">
                         <form th:action="@{/exercise/delete/{id}(id=${exercise.id})}" th:method="delete">
                             <span class="pointable enlarge-on-hover" th:text="${exercise.name}"/>
-                            <button class="btn-simple" style="font-size: 14px; float: right;"
-                                    type="button">Usuń
+                            <button class="btn-simple" style="font-size: 14px; float: right;">Usuń
                             </button>
                         </form>
                     </li>
@@ -61,7 +60,11 @@
                     <h5>Szukaj ćwiczenia</h5>
                     <div class="border rounded p-2">
                         <form method="post" th:object="${exerciseForm}">
-                            <input class="m-2" placeholder="nazwa ćwiczenia" th:field="*{name}">
+                            <input class="m-2"
+                                   id="exercise-search-input"
+                                   onkeyup="filterExercises()"
+                                   placeholder="nazwa ćwiczenia"
+                                   th:field="*{name}">
                         </form>
                     </div>
                 </div>
